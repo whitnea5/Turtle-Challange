@@ -40,8 +40,8 @@ namespace TurtleChallenge
         public MovesDTO GetMoves()
         {
             MovesDTO moves = new MovesDTO();
-            var moveNoEnd = File.ReadAllLines("../../../settings/moves.csv");
-            moves.Moves = moveNoEnd[0].Split(',');
+            var move = File.ReadAllLines("../../../settings/moves.csv");
+            moves.Moves = move[0].Split(',');
             return moves;
         }
 
