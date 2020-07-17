@@ -4,7 +4,18 @@ using System.Text;
 
 namespace TurtleChallenge.Models
 {
-    class Enums
+    public enum Components
     {
+        Turtle,
+        Exit,
+        Mine
+    }
+
+    public enum Directions
+    {
+        North,
+        South,
+        East,
+        West
     }
 }
