@@ -11,6 +11,7 @@ namespace TurtleChallenge
             Console.WriteLine("Hello World!");
             CsvReader csv = new CsvReader();
             GameSettingsDTO settings = csv.GetGameSettings();
+            MovesDTO moves = csv.GetMoves();
         }
     }
 }
