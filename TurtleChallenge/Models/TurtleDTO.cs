@@ -10,16 +10,17 @@ namespace TurtleChallenge.Models
         //Singleton implementation of turtle class to ensure just one instance at a time
         public PointDTO Position;
         private static TurtleDTO _turtle;
-        private TurtleDTO(PointDTO pos)
+        private TurtleDTO(GameSettingsDTO gameSettings)
         {
-            Position = pos;
+            Position = gameSettings.StartingPoint;
+            Direction = (Directions)Enum.Parse(typeof(Directions), gameSettings.Direction);
         }
 
-        public static TurtleDTO Instance(PointDTO pos)
+        public static TurtleDTO Instance(GameSettingsDTO gameSettings)
         {
             if(_turtle == null)
             {
-                _turtle = new TurtleDTO(pos);
+                _turtle = new TurtleDTO(gameSettings);
             }
             return _turtle;
         }
@@ -68,9 +69,10 @@ namespace TurtleChallenge.Models
         /// Reset turtle back to starting position
         /// </summary>
         /// <param name="startPoint"></param>
-        public void ResetTurtle(PointDTO startPoint)
+        public void ResetTurtle(GameSettingsDTO gameSettings)
         {
-            _turtle.Position = startPoint;
+            _turtle.Position = gameSettings.StartingPoint;
+            _turtle.Direction = (Directions)Enum.Parse(typeof(Directions), gameSettings.Direction);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TurtleChallenge.Models
         public void StartGame()
         {
             string[][] sequences = _moves.Moves;
-            TurtleDTO turtle = TurtleDTO.Instance(_gameSettings.StartingPoint);
+            TurtleDTO turtle = TurtleDTO.Instance(_gameSettings);
             int i = 1;
             foreach(string[] moves in sequences)
             {
@@ -68,7 +68,7 @@ namespace TurtleChallenge.Models
                     }
                 }
                 i++;
-                turtle.ResetTurtle(_gameSettings.StartingPoint);
+                turtle.ResetTurtle(_gameSettings);
             }
         }
 
@@ -79,7 +79,7 @@ namespace TurtleChallenge.Models
         /// <returns></returns>
         public GameState GetGameState(TurtleDTO turtle)
         {
-            if (turtle.Position.X < 0 || turtle.Position.X >= _grid.height || turtle.Position.Y < 0 || turtle.Position.Y > _grid.width)
+            if (turtle.Position.X < 0 || turtle.Position.X >= _grid.width || turtle.Position.Y < 0 || turtle.Position.Y > _grid.height)
             {
                 return GameState.OutOfBounds;
             }

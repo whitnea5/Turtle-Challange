@@ -1,3 +1,3 @@
 BoardSize X,BoardSize Y,StartingPoint X,StartingPoint Y,Direction,ExitPoint X,ExitPoint Y,Mine X,Mine Y
-4,5,0,0,East,4,4,1,2
+4,5,0,0,East,3,4,1,2
 ,,,,,,,2,2
