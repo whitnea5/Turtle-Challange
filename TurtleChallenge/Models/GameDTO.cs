@@ -27,16 +27,23 @@ namespace TurtleChallenge.Models
             SetComponents();
         }
 
+        /// <summary>
+        /// Function to start game
+        /// </summary>
         public void StartGame()
         {
-            string[][] sequences = _moves.Moves;
+
+            string[][] sequences = _moves.Sequences;
+            // initialise turtle
             TurtleDTO turtle = TurtleDTO.Instance(_gameSettings);
             int i = 1;
+            // Loop through sequences of moves
             foreach(string[] moves in sequences)
             {
                 Console.WriteLine("Sequence " + i);
                 foreach (string move in moves)
                 {
+                    //make relevant move
                     if (move == "r")
                     {
                         turtle.Rotate();
@@ -50,6 +57,7 @@ namespace TurtleChallenge.Models
                         break;
                     }
 
+                    // check the current state of the game
                     GameState state = GetGameState(turtle);
                     if (state == GameState.Exit)
                     {
@@ -68,6 +76,7 @@ namespace TurtleChallenge.Models
                     }
                 }
                 i++;
+                //Reset turtle after each sequence
                 turtle.ResetTurtle(_gameSettings);
             }
         }
