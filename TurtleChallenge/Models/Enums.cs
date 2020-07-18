@@ -18,4 +18,12 @@ namespace TurtleChallenge.Models
         East,
         West
     }
+
+    public enum GameState
+    {
+        Mine,
+        Exit,
+        Normal,
+        OutOfBounds
+    }
 }

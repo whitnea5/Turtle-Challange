@@ -39,9 +39,15 @@ namespace TurtleChallenge
         //function to read in moves from moves.csv
         public MovesDTO GetMoves()
         {
-            MovesDTO moves = new MovesDTO();
+            
             var move = File.ReadAllLines("../../../settings/moves.csv");
-            moves.Moves = move[0].Split(',');
+            MovesDTO moves = new MovesDTO(move.Length);
+            for (int i = 0; i < move.Length; i++)
+            {
+                var test = move[i].Split(',');
+                moves.Moves[i] = new string[test.Length];
+                moves.Moves[i] = test;
+            }
             return moves;
         }
 

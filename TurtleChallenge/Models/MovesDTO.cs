@@ -6,6 +6,11 @@ namespace TurtleChallenge.Models
 {
     class MovesDTO
     {
-        public string[] Moves { get; set; }
+        public string[][] Moves { get; set; }
+
+        public MovesDTO(int size)
+        {
+            Moves = new string[size][];
+        }
     }
 }

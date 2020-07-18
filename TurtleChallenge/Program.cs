@@ -8,10 +8,8 @@ namespace TurtleChallenge
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            CsvReader csv = new CsvReader();
-            GameSettingsDTO settings = csv.GetGameSettings();
-            MovesDTO moves = csv.GetMoves();
+            GameDTO game = new GameDTO();
+            game.StartGame();
         }
     }
 }

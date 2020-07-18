@@ -6,7 +6,7 @@ namespace TurtleChallenge.Models
 {
     class GridDTO
     {
-        private int [][] _grid;
+        public int [][] grid;
         public int width;
         public int height;
 
@@ -15,10 +15,10 @@ namespace TurtleChallenge.Models
             width = y;
             height = x;
 
-            _grid = new int [height][];
-            for(int i = 0; i < width; i++)
+            grid = new int [height][];
+            for(int i = 0; i <= width; i++)
             {
-                _grid[i] = new int[width];
+                grid[i] = new int[width];
             }
         }
     }
