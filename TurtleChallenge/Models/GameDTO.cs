@@ -45,6 +45,10 @@ namespace TurtleChallenge.Models
                     {
                         turtle.Move();
                     }
+                    else if (move == "")
+                    {
+                        break;
+                    }
 
                     GameState state = GetGameState(turtle);
                     if (state == GameState.Exit)
@@ -64,9 +68,15 @@ namespace TurtleChallenge.Models
                     }
                 }
                 i++;
+                turtle.ResetTurtle(_gameSettings.StartingPoint);
             }
         }
 
+        /// <summary>
+        /// Get current state of game
+        /// </summary>
+        /// <param name="turtle"></param>
+        /// <returns></returns>
         public GameState GetGameState(TurtleDTO turtle)
         {
             if (turtle.Position.X < 0 || turtle.Position.X >= _grid.height || turtle.Position.Y < 0 || turtle.Position.Y > _grid.width)

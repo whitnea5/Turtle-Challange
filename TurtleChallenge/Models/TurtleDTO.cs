@@ -7,6 +7,7 @@ namespace TurtleChallenge.Models
 {
     class TurtleDTO
     {
+        //Singleton implementation of turtle class to ensure just one instance at a time
         public PointDTO Position;
         private static TurtleDTO _turtle;
         private TurtleDTO(PointDTO pos)
@@ -61,6 +62,15 @@ namespace TurtleChallenge.Models
                     Direction = Directions.North;
                     break;
             }
+        }
+
+        /// <summary>
+        /// Reset turtle back to starting position
+        /// </summary>
+        /// <param name="startPoint"></param>
+        public void ResetTurtle(PointDTO startPoint)
+        {
+            _turtle.Position = startPoint;
         }
     }
 }

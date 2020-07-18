@@ -15,6 +15,7 @@ namespace TurtleChallenge.Models
             width = y;
             height = x;
 
+            //initialise grid
             grid = new int [height][];
             for(int i = 0; i <= width; i++)
             {
