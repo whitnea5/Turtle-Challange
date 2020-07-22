@@ -1,28 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 namespace TurtleChallenge.Models
 {
-    class TurtleDTO
+    class Turtle
     {
         //Singleton implementation of turtle class to ensure just one instance at a time
-        public PointDTO Position;
-        private static TurtleDTO _turtle;
-        private TurtleDTO(GameSettingsDTO gameSettings)
+        public Point Position;
+        private static Turtle _turtle;
+        private Turtle(GameSettings gameSettings)
         {
             Position = gameSettings.StartingPoint;
             Direction = (Directions)Enum.Parse(typeof(Directions), gameSettings.Direction);
         }
 
-        public static TurtleDTO Instance(GameSettingsDTO gameSettings)
+        public static Turtle Instance(GameSettings gameSettings)
         {
-            if(_turtle == null)
-            {
-                _turtle = new TurtleDTO(gameSettings);
-            }
-            return _turtle;
+            //compound assignment of turtle
+            return _turtle ??= new Turtle(gameSettings);
         }
 
         public Directions Direction { get; set; }
@@ -32,16 +26,16 @@ namespace TurtleChallenge.Models
             switch (Direction)
             {
                 case Directions.North:
-                    _turtle.Position = new PointDTO(_turtle.Position.X - 1, _turtle.Position.Y);
+                    _turtle.Position = new Point(_turtle.Position.X - 1, _turtle.Position.Y);
                     break;
                 case Directions.East:
-                    _turtle.Position = new PointDTO(_turtle.Position.X, _turtle.Position.Y + 1);
+                    _turtle.Position = new Point(_turtle.Position.X, _turtle.Position.Y + 1);
                     break;
                 case Directions.South:
-                    _turtle.Position = new PointDTO(_turtle.Position.X + 1, _turtle.Position.Y);
+                    _turtle.Position = new Point(_turtle.Position.X + 1, _turtle.Position.Y);
                     break;
                 case Directions.West:
-                    _turtle.Position = new PointDTO(_turtle.Position.X, _turtle.Position.Y - 1);
+                    _turtle.Position = new Point(_turtle.Position.X, _turtle.Position.Y - 1);
                     break;
             }
         }
@@ -66,10 +60,10 @@ namespace TurtleChallenge.Models
         }
 
         /// <summary>
-        /// Reset turtle back to starting position
+        /// Reset turtle back to starting position and direction
         /// </summary>
-        /// <param name="startPoint"></param>
-        public void ResetTurtle(GameSettingsDTO gameSettings)
+        /// <param name="gameSettings"></param>
+        public void ResetTurtle(GameSettings gameSettings)
         {
             _turtle.Position = gameSettings.StartingPoint;
             _turtle.Direction = (Directions)Enum.Parse(typeof(Directions), gameSettings.Direction);

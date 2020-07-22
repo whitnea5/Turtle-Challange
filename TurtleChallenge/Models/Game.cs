@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
 
 namespace TurtleChallenge.Models
 {
-    class GameDTO
+    class Game
     {
-        private PointDTO _turtleStartPoint;
-        private CsvReader _csvReader;
-        private GameSettingsDTO _gameSettings;
-        private MovesDTO _moves;
-        private GridDTO _grid;
+        private readonly GameSettings _gameSettings;
+        private readonly Moves _moves;
+        private readonly Grid _grid;
 
         /// <summary>
         /// GameDTO initialise
         /// </summary>
-        public GameDTO()
+        public Game()
         {
-            _csvReader = new CsvReader();
-            _gameSettings = _csvReader.GetGameSettings();
-            _moves = _csvReader.GetMoves();
-            _turtleStartPoint = _gameSettings.StartingPoint;
-            _grid = new GridDTO(_gameSettings.BoardSize.Y, _gameSettings.BoardSize.X);
+            CsvReader csvReader = new CsvReader();
+            _gameSettings = csvReader.GetGameSettings();
+            _moves = csvReader.GetMoves();
+            _grid = new Grid(_gameSettings.BoardSize.Y, _gameSettings.BoardSize.X);
             SetComponents();
         }
 
@@ -35,7 +29,7 @@ namespace TurtleChallenge.Models
 
             string[][] sequences = _moves.Sequences;
             // initialise turtle
-            TurtleDTO turtle = TurtleDTO.Instance(_gameSettings);
+            Turtle turtle = Turtle.Instance(_gameSettings);
             int i = 1;
             // Loop through sequences of moves
             foreach(string[] moves in sequences)
@@ -86,9 +80,9 @@ namespace TurtleChallenge.Models
         /// </summary>
         /// <param name="turtle"></param>
         /// <returns></returns>
-        public GameState GetGameState(TurtleDTO turtle)
+        public GameState GetGameState(Turtle turtle)
         {
-            if (turtle.Position.X < 0 || turtle.Position.X >= _grid.width || turtle.Position.Y < 0 || turtle.Position.Y > _grid.height)
+            if (turtle.Position.X < 0 || turtle.Position.X >= _grid.Width || turtle.Position.Y < 0 || turtle.Position.Y > _grid.Height)
             {
                 return GameState.OutOfBounds;
             }
@@ -116,10 +110,10 @@ namespace TurtleChallenge.Models
         /// <summary>
         /// Function to set mines on board
         /// </summary>
-        /// <param name="Mines"></param>
-        private void SetMines(List<PointDTO> Mines)
+        /// <param name="mines"></param>
+        private void SetMines(List<Point> mines)
         {
-            foreach(PointDTO mine in Mines)
+            foreach(Point mine in mines)
             {
                 try
                 {
@@ -127,7 +121,7 @@ namespace TurtleChallenge.Models
                 } 
                 catch(Exception e)
                 {
-
+                    Console.WriteLine(e.Message);
                 }
             }
         }
@@ -135,32 +129,32 @@ namespace TurtleChallenge.Models
         /// <summary>
         /// Function to set turtle on board
         /// </summary>
-        /// <param name="StartingPoint"></param>
-        private void SetTurtle(PointDTO StartingPoint)
+        /// <param name="startingPoint"></param>
+        private void SetTurtle(Point startingPoint)
         {
             try
             {
-                _grid.grid[StartingPoint.Y][StartingPoint.X] = (int)Components.Turtle;
+                _grid.grid[startingPoint.Y][startingPoint.X] = (int)Components.Turtle;
             }
             catch(Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }
         }
 
         /// <summary>
         /// Function to set exit point on board
         /// </summary>
-        /// <param name="ExitPoint"></param>
-        private void SetExitPoint(PointDTO ExitPoint)
+        /// <param name="exitPoint"></param>
+        private void SetExitPoint(Point exitPoint)
         {
             try
             {
-                _grid.grid[ExitPoint.Y][ExitPoint.X] = (int)Components.Exit;
+                _grid.grid[exitPoint.Y][exitPoint.X] = (int)Components.Exit;
             }
             catch(Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }
         }
     }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.IO;
-using TurtleChallenge.Models;
+﻿using TurtleChallenge.Models;
 
 namespace TurtleChallenge
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            GameDTO game = new GameDTO();
+            Game game = new Game();
             game.StartGame();
         }
     }

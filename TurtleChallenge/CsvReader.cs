@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Text;
 using TurtleChallenge.Models;
 
 namespace TurtleChallenge
 {
     class CsvReader
     {
-        public CsvReader() { }
 
         //function to read in game settings from settings.csv
-        public GameSettingsDTO GetGameSettings()
+        public GameSettings GetGameSettings()
         {
-            GameSettingsDTO settings = new GameSettingsDTO();
+            GameSettings settings = new GameSettings();
 
-            DataTable dt = ConvertCSVtoDataTable("../../../settings/settings.csv");
+            DataTable dt = ConvertCsvtoDataTable("../../../settings/settings.csv");
             int i = 0;
 
             //populate game settings with information from the csv file.
@@ -24,12 +21,21 @@ namespace TurtleChallenge
             {
                 if(i == 0)
                 {
-                    settings.BoardSize = new PointDTO(int.Parse(row["BoardSize X"].ToString()), int.Parse(row["BoardSize Y"].ToString()));
-                    settings.StartingPoint = new PointDTO(int.Parse(row["StartingPoint X"].ToString()), int.Parse(row["StartingPoint Y"].ToString()));
+                    int.TryParse(row["BoardSize X"].ToString(), out int bsX);
+                    int.TryParse(row["BoardSize Y"].ToString(), out int bsY);
+                    int.TryParse(row["StartingPoint X"].ToString(), out int spX);
+                    int.TryParse(row["StartingPoint Y"].ToString(), out int spY);
+                    int.TryParse(row["ExitPoint X"].ToString(), out int epX);
+                    int.TryParse(row["ExitPoint Y"].ToString(), out int epY);
+                    settings.BoardSize = new Point(bsX, bsY);
+                    settings.StartingPoint = new Point(spX, spY);
                     settings.Direction = row["Direction"].ToString();
-                    settings.ExitPoint = new PointDTO(int.Parse(row["ExitPoint X"].ToString()), int.Parse(row["ExitPoint Y"].ToString()));
+                    settings.ExitPoint = new Point(epX, epY);
                 }
-                settings.MinePoints.Add(new PointDTO(int.Parse(row["Mine X"].ToString()), int.Parse(row["Mine Y"].ToString())));
+
+                int.TryParse(row["Mine X"].ToString(), out int mpX);
+                int.TryParse(row["Mine Y"].ToString(), out int mpY);
+                settings.MinePoints.Add(new Point(mpX, mpY));
                 i++;
             }
 
@@ -37,22 +43,22 @@ namespace TurtleChallenge
         }
 
         //function to read in moves from moves.csv
-        public MovesDTO GetMoves()
+        public Moves GetMoves()
         {
             
             var move = File.ReadAllLines("../../../settings/moves.csv");
-            MovesDTO moves = new MovesDTO(move.Length);
+            Moves moves = new Moves(move.Length);
             for (int i = 0; i < move.Length; i++)
             {
                 var test = move[i].Split(',');
-                moves.Moves[i] = new string[test.Length];
-                moves.Moves[i] = test;
+                moves.Sequences[i] = new string[test.Length];
+                moves.Sequences[i] = test;
             }
             return moves;
         }
 
-        //function to convert csv to datatable
-        public static DataTable ConvertCSVtoDataTable(string strFilePath)
+        //function to convert csv to DataTable
+        public static DataTable ConvertCsvtoDataTable(string strFilePath)
         {
             StreamReader sr = new StreamReader(strFilePath);
             string[] headers = sr.ReadLine().Split(',');
@@ -61,6 +67,7 @@ namespace TurtleChallenge
             {
                 dt.Columns.Add(header);
             }
+
             while (!sr.EndOfStream)
             {
                 string[] rows = sr.ReadLine().Split(',');
@@ -69,8 +76,10 @@ namespace TurtleChallenge
                 {
                     dr[i] = rows[i];
                 }
+
                 dt.Rows.Add(dr);
             }
+
             return dt;
         }
     }
